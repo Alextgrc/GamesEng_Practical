@@ -38,6 +38,7 @@ void Reset() {
 	paddles[1].setPosition(gameWidth - 10 - paddleSize.x / 2, gameHeight / 2);
 	//Reset ball position2
 	ball.setPosition(gameWidth / 2, gameHeight / 2);
+	ballVelocity = { (server ? 100.0f : -100.0f), 60.0f };
 }
 void Update(RenderWindow &window) {
 
@@ -57,15 +58,25 @@ void Update(RenderWindow &window) {
 		window.close();
 	}
 	//Handle paddle movement
-	float direction = 0.0f;
+	float directionL = 0.0f;
+	float directionR = 0.0f;
+
 	if (Keyboard::isKeyPressed(controls[0])) {
-		direction--;
+		directionL--;
 	}
 	if (Keyboard::isKeyPressed(controls[1])) {
-		direction++;
+		directionL++;
 	}
+	if (Keyboard::isKeyPressed(controls[2])) {
+		directionR--;
+	}
+	if (Keyboard::isKeyPressed(controls[3])) {
+		directionR++;
+	}
+
 	ball.move(ballVelocity * dt);
-	paddles[0].move(0, direction * paddleSpeed * dt);
+	paddles[0].move(0, directionL* paddleSpeed * dt);
+	paddles[1].move(0, directionR* paddleSpeed * dt);
 	//Check ball collision
 	const float bx = ball.getPosition().x;
 	const float by = ball.getPosition().y;
@@ -96,11 +107,11 @@ void Update(RenderWindow &window) {
 		ballVelocity.x *= -1.1f;
 		ballVelocity.y *= 1.1f;
 	}
-	else if (bx<paddleSize.x &&
+	else if (bx > gameWidth - paddleSize.x &&
 		by > paddles[1].getPosition().y - (paddleSize.y * 0.5) &&
 		by < paddles[1].getPosition().y + (paddleSize.y * 0.5)) {
 		//left paddle
-		ballVelocity.x *= 1.1f;
+		ballVelocity.x *= -1.1f;
 		ballVelocity.y *= 1.1f;
 	}
 }
