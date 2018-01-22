@@ -1,2 +1,3 @@
-# pong_game
-Pong game written in C++ (SET09121)
+# Games Engineering (SET09121) in C++
+Pong game 
+Space Invaders 
