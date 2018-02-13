@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
+
+
 Vector2f ballVelocity;
 bool server = false;
 const Keyboard::Key controls[4] = {
@@ -32,6 +34,7 @@ void Load() {
 	//Reset ball position2
 	ball.setPosition(gameWidth / 2, gameHeight / 2);
 	ballVelocity = { (server ? 100.0f : -100.0f), 60.0f };
+	
 }
 void Reset() {
 	paddles[0].setPosition(10 + paddleSize.x / 2, gameHeight / 2);
